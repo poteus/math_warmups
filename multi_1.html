@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SPS - Multiplication Drill</title>
+    <meta name="description" content="3 minutes drill to practice multiplication facts">
+    <meta name="keywords" content="multiplication,drill" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="body">
+<p id="timer"></p>
+<script>
+
+function countdown(time)
+{
+	var countDownDate = new Date().getTime();
+	
+}
+
+function operation(a,b)
+{
+  return a*b;
+}
+
+function check_result(a,b,answer)
+{
+  return operation(a,b) == answer;
+}
+
+function operation_string(a,b)
+{
+  return a + "*" + b;
+}
+
+function drill(time)
+{
+	var a,b,answer,correct_answer,table_to_review=-1,most=0;
+	var number_questions=0,number_good_answers=0;
+	var wrong_answers=[0,0,0,0,0,0,0,0,0,0];
+	var good_answers=[0,0,0,0,0,0,0,0,0,0];
+	var mistakes_a=[];
+	var mistakes_b=[];
+	var initial_time = new Date().getTime();
+	
+	while((new Date().getTime() - initial_time)<time*1000)
+	{
+		a=Math.round(Math.random()*10);
+		b=Math.round(Math.random()*10);
+		answer=prompt(operation_string(a,b));
+		number_questions++;
+		if(check_result(a,b,answer))
+		{
+			number_good_answers++;
+			good_answers[a]++;
+			good_answers[b]++;
+		}
+		else
+		{
+			wrong_answers[a]++;
+			mistakes_a.push(a);
+			wrong_answers[b]++;
+			mistakes_b.push(b);
+		}
+	}
+	document.write("Let's see how you did...<br>");
+	document.write("You made " + number_questions + " multiplications<br>");
+    document.write("and " + number_good_answers + " were right.<br>");  
+	document.write("Grade: " + Math.round(100*number_good_answers/number_questions) + "%<br>");  
+	
+	document.write('<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">');
+	document.write('<div class="w3-container">');
+	
+	
+	document.write('<br><table class="tabledark w3-table-all w3-small w3-card-4 w3-hoverable" style="width:400px"><caption>Results</caption>');
+	document.write("<thead><tr><th>table</th><th>%</th></tr></thead>");
+	document.write("<tbody>");
+	for(var i=0; i<10; i++)
+	{
+		var s="";
+		if(good_answers[i] == 0 && wrong_answers[i] == 0) s = "No Data!<br>";
+		else s = Math.round(100*good_answers[i]/(good_answers[i]+wrong_answers[i])) + "%<br>";
+		document.write("<tr><th>" + i + "</th><th>" + s + "</th></tr>");
+		if(wrong_answers[i]>most)
+		{
+			most = wrong_answers[i];
+			table_to_review = i;
+		}
+	}
+	document.write("</tbody></table><br><br>");
+	alert("You made " + number_questions + " multiplications");
+	alert("and " + number_good_answers + " were right.");
+	if(number_questions != number_good_answers) alert("Now let's fix your mistakes.");
+	
+	for (i=0; i<mistakes_a.length; i++)
+	{
+		do
+		{
+			answer=prompt(mistakes_a[i]+" * "+mistakes_b[i]+" = ");
+			correct_answer=check_result(mistakes_a[i],mistakes_b[i],answer);
+			if (correct_answer != true)
+			{
+				alert("Wrong answer.  Try again...");
+			}
+		}
+		while(correct_answer != true);	
+		if(i == mistakes_a.length-1) alert("Great job fixing your errors!");
+	}
+	
+	if(table_to_review != -1)
+	{
+		alert("Now let's review the table of "+table_to_review);
+		for (var j=0;j<11;j++)
+		{
+			do
+			{
+				answer=prompt(table_to_review+" * "+j+" = ");
+				correct_answer=check_result(table_to_review,j,answer);
+				if (correct_answer != true)
+				{
+					alert("Wrong answer.  Try again...");
+				}
+			}
+			while(correct_answer != true);
+		}
+	}
+	
+}
+alert("Do as many multiplications as possible in 3 minutes.\nReady?");
+drill(180);
+</script>
+</body>
