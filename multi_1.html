@@ -22,7 +22,9 @@
 // 
 // When printing final results, table needs to show results for each type of problem: 
 // 2 + 3, (-2) + 3, etc...
-
+var operation_sign = 0
+var a_sign = 0
+var b_sign = 0
 
 function countdown(time)
 {
@@ -32,7 +34,34 @@ function countdown(time)
 
 function operation(a,b)
 {
-  return a*b;
+    operation_sign=Math.round(Math.random())
+    a_sign=Math.round(Math.random())
+    b_sign=Math.round(Math.random())
+  if(operation_sign == 0){
+      if(a_sign == 0){
+          a = a * 1
+      }else{
+          a = a * -1
+      }
+      if(b_sign == 0){
+          b = b * 1
+      }else{
+          b = b * -1
+      }
+      return a+b;
+    }else{
+        if(a_sign == 0){
+          a = a * 1
+      }else{
+          a = a * -1
+      }
+      if(b_sign == 0){
+          b = b * 1
+      }else{
+          b = b * -1
+      }
+        return a-b;
+    }
 }
 
 function check_result(a,b,answer)
@@ -42,7 +71,31 @@ function check_result(a,b,answer)
 
 function operation_string(a,b)
 {
-  return a + "*" + b;
+   if(operation_sign == 0){
+    if(a_sign == 1 & b_sign == 1){
+        return "-" + a + "+" + "-" + b
+    }
+    if(a_sign == 1 & b_sign == 0){
+        return "-" + a + "+" + b
+    }
+    if(a_sign == 0 & b_sign == 1){
+        return a + "+" + "-" + b
+    }
+    return a + "+" + b;
+   }
+   else{
+    if(a_sign == 1 & b_sign == 1){
+        return "-" + a + "-" + "-" + b
+    }
+    if(a_sign == 1 & b_sign == 0){
+        return "-" + a + "-" + b
+    }
+    if(a_sign == 0 & b_sign == 1){
+        return a + "-" + "-" + b
+    }
+    return a + "-" + b;
+   }
+  
 }
 
 function drill(time)
@@ -138,7 +191,7 @@ function drill(time)
 	}
 	
 }
-alert("Do as many multiplications as possible in 3 minutes.\nReady?");
+alert("Do as many addition/subtraction as possible in 3 minutes.\nReady?");
 drill(180);
 </script>
 </body>
